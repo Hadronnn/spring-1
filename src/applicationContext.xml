@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:content="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <content:property-placeholder location="jdbc.properties"/>
+<!--配置一个Bean-->
+    <bean id="book" class="com.oaec.spring.entity.Book">
+        <property name="bookId" value="2"/>
+        <property name="name" value="Spring开发"/>
+        <property name="price" value="9.9"/>
+        <property name="author" value="李四"/>
+    </bean>
+    <bean id="book2" class="com.oaec.spring.entity.Book">
+        <constructor-arg name="bookId" value="3"/>
+        <constructor-arg name="author" value="3"/>
+        <constructor-arg name="name" value="3"/>
+        <constructor-arg name="price" value="3"/>
+    </bean>
+    <!--<bean id="book2" class="com.oaec.spring.entity.Book">
+        <constructor-arg index="0" value="Java开发"/>
+        <constructor-arg index="1" value="4"/>
+        <constructor-arg index="2" value="4"/>
+        <constructor-arg index="3" value="4"/>
+    </bean>-->
+    <bean id="person1" class="com.oaec.spring.entity.Person">
+        <property name="name" value="于观旭"/>
+        <property name="age" value="21"/>
+        <property name="books">
+            <bean class="com.oaec.spring.entity.Book">
+                <property name="name" value="Oracle开发"/>
+                <property name="bookId" value="1"/>
+                <property name="author" value="于老板"/>
+                <property name="price" value="9.9"/>
+            </bean>
+        </property>
+    </bean>
+    <bean id="person2" class="com.oaec.spring.entity.Person">
+        <property name="name" value="于观旭"/>
+        <property name="age" value="21"/>
+        <property name="books">
+            <list>
+                <ref bean="book"/>
+                <ref bean="book2"/>
+            </list>
+        </property>
+    </bean>
+<!--  配置DruidDataSource  -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+</beans>
